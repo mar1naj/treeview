@@ -1,0 +1,4 @@
+passport_treeview:
+    resource: "@PassportTreeviewBundle/Resources/config/routing.yml"
+    prefix:   /
+
