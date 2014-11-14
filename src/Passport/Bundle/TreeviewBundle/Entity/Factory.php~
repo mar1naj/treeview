@@ -1,0 +1,53 @@
+<?php
+
+namespace Passport\Bundle\TreeviewBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Factory
+ *
+ * @ORM\Table(name="factory")
+ * @ORM\Entity
+ */
+class Factory
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="children", type="integer", nullable=false)
+     */
+    private $children;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="min", type="integer", nullable=false)
+     */
+    private $min;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="max", type="integer", nullable=false)
+     */
+    private $max;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}

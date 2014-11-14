@@ -1,0 +1,42 @@
+<?php
+
+namespace Passport\Bundle\TreeviewBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Child
+ *
+ * @ORM\Table(name="child", indexes={@ORM\Index(name="parent", columns={"parent"})})
+ * @ORM\Entity
+ */
+class Child
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="value", type="integer", nullable=false)
+     */
+    private $value;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \Passport\Bundle\TreeviewBundle\Entity\Factory
+     *
+     * @ORM\ManyToOne(targetEntity="Passport\Bundle\TreeviewBundle\Entity\Factory")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parent", referencedColumnName="id")
+     * })
+     */
+    private $parent;
+
+
+}

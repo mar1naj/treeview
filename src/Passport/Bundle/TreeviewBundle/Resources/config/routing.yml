@@ -1,0 +1,3 @@
+passport_treeview_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: PassportTreeviewBundle:Default:index }
