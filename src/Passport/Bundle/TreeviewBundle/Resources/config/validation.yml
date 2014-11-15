@@ -1,0 +1,24 @@
+#src/Passport/Bundle/TreeviewBundle/Resources/config/validation.yml
+
+
+Passport\Bundle\TreeviewBundle\Model\Factory:
+    properties:
+        name:
+            - NotBlank: { message: "Factory name is required!"}
+        children:
+            - Range:
+                min: 1
+                max: 15
+                minMessage: You must enter a value between 1 and 15.
+                maxMessage: You must enter a value between 1 and 15.
+        min:
+            - NotBlank: { message: "Minimum field is required"}
+            - Length:
+                max: 10
+                maxMessage: Minimum field can't be more than 10 digits
+        max:
+            - NotBlank: { message: "Maximum field is required"}
+            - Length:
+                max: 10
+                maxMessage: Maximum field can't be more than 10 digits
+
