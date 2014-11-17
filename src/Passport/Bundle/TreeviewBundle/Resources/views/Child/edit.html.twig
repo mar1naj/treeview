@@ -1,15 +1,16 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Factory creation</h1>
+    <h1>Child edit</h1>
 
-    {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form(edit_form) }}
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('factory') }}">
+        <a href="{{ path('child') }}">
             Back to the list
         </a>
     </li>
+    <li>{{ form(delete_form) }}</li>
 </ul>
 {% endblock %}

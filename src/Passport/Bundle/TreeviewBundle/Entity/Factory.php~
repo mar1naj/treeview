@@ -41,6 +41,13 @@ class Factory
     private $max;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modified", type="datetime", nullable=false)
+     */
+    private $modified;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")

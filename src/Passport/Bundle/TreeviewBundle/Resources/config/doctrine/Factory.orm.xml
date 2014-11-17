@@ -8,5 +8,6 @@
     <field name="children" type="integer" column="children" nullable="false"/>
     <field name="min" type="integer" column="min" nullable="false"/>
     <field name="max" type="integer" column="max" nullable="false"/>
+    <field name="modified" type="datetime" column="modified" nullable="false"/>
   </entity>
 </doctrine-mapping>

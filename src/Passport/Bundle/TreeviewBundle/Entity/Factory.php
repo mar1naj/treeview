@@ -41,6 +41,13 @@ class Factory
     private $max;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modified", type="datetime", nullable=false)
+     */
+    private $modified;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -141,6 +148,29 @@ class Factory
     public function getMax()
     {
         return $this->max;
+    }
+
+    /**
+     * Set modified
+     *
+     * @param \DateTime $modified
+     * @return Factory
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return \DateTime 
+     */
+    public function getModified()
+    {
+        return $this->modified;
     }
 
     /**

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FactoryType extends AbstractType
+class ChildType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,11 +15,8 @@ class FactoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('children')
-            ->add('min')
-            ->add('max')
-            ->add('modified')
+            ->add('value')
+            ->add('parent')
         ;
     }
     
@@ -29,7 +26,7 @@ class FactoryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Passport\Bundle\TreeviewBundle\Entity\Factory'
+            'data_class' => 'Passport\Bundle\TreeviewBundle\Entity\Child'
         ));
     }
 
@@ -38,6 +35,6 @@ class FactoryType extends AbstractType
      */
     public function getName()
     {
-        return 'passport_bundle_treeviewbundle_factory';
+        return 'passport_bundle_treeviewbundle_child';
     }
 }
