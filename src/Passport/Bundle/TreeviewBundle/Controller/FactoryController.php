@@ -30,9 +30,12 @@ class FactoryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('PassportTreeviewBundle:Factory')->findAll();
-
+        foreach($entities as $entity){
+            $children[$entity->getId()] = $em->getRepository('PassportTreeviewBundle:Child')->findByParent($entity);
+        }
         return array(
             'entities' => $entities,
+            'children' => $children
         );
     }
     /**
@@ -49,11 +52,25 @@ class FactoryController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('factory_show', array('id' => $entity->getId())));
+            if($entity->getMax() <= $entity->getMin()){
+                $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    'Min value should be less than Max value!'
+                );
+            }else{
+                $em = $this->getDoctrine()->getManager();
+                for($i=1; $i++; $i<=$entity->getChildren()){
+                    $child = new Child();
+                    $child->setValue(rand($entity->getMin(), $entity->getMax()));
+                    $child->setParent($entity);
+                    $em->persist($child);
+                    $em->flush();
+                }
+                $em->persist($entity);
+                $em->flush();
+    
+                return $this->redirect($this->generateUrl('factory_show', array('id' => $entity->getId())));
+            }
         }
 
         return array(
@@ -191,9 +208,16 @@ class FactoryController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            if($entity->getMax() <= $entity->getMin()){
+                $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    'Min value should be less than Max value!'
+                );
+            }else{
             $em->flush();
 
             return $this->redirect($this->generateUrl('factory_edit', array('id' => $id)));
+            }
         }
 
         return array(

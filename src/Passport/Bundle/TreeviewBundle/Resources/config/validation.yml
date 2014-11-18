@@ -18,6 +18,7 @@ Passport\Bundle\TreeviewBundle\Entity\Factory:
                 maxMessage: Minimum field can't be more than 10 digits
         max:
             - NotBlank: { message: "Maximum field is required"}
+            - Passport\Bundle\TreeviewBundle\Validator\Constraints\ContainsAlphanumeric: ~
             - Length:
                 max: 10
                 maxMessage: Maximum field can't be more than 10 digits
