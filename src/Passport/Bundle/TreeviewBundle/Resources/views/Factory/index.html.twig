@@ -10,7 +10,6 @@
                 <th>Children</th>
                 <th>Min</th>
                 <th>Max</th>
-                <th>Modified</th>
                 <th>Id</th>
                 <th>Actions</th>
             </tr>
@@ -22,7 +21,6 @@
                 <td>{{ entity.children }}</td>
                 <td>{{ entity.min }}</td>
                 <td>{{ entity.max }}</td>
-                <td>{% if entity.modified %}{{ entity.modified|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ entity.id }}</td>
                 <td>
                 <ul>
@@ -34,6 +32,13 @@
                     </li>
                 </ul>
                 </td>
+            </tr>
+            <tr>
+                <td>Child Nodes: </td>
+                {% for child in children[entity.id] %}
+                    <td>child.value</td>
+                {% endfor %}
+                    
             </tr>
         {% endfor %}
         </tbody>
