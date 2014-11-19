@@ -35,10 +35,11 @@
             </tr>
             <tr>
                 <td>Child Nodes: </td>
+                <td colspan=100>
                 {% for child in children[entity.id] %}
-                    <td>child.value</td>
+                    | {{ child.value }}
                 {% endfor %}
-                    
+                </td>
             </tr>
         {% endfor %}
         </tbody>

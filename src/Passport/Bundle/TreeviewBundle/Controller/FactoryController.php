@@ -10,6 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Passport\Bundle\TreeviewBundle\Entity\Factory;
 use Passport\Bundle\TreeviewBundle\Form\FactoryType;
 
+use Passport\Bundle\TreeviewBundle\Entity\Child;
+use Passport\Bundle\TreeviewBundle\Form\ChildType;
+
 /**
  * Factory controller.
  *
@@ -30,6 +33,7 @@ class FactoryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('PassportTreeviewBundle:Factory')->findAll();
+        $children = "";
         foreach($entities as $entity){
             $children[$entity->getId()] = $em->getRepository('PassportTreeviewBundle:Child')->findByParent($entity);
         }
@@ -59,17 +63,17 @@ class FactoryController extends Controller
                 );
             }else{
                 $em = $this->getDoctrine()->getManager();
-                for($i=1; $i++; $i<=$entity->getChildren()){
+                $em->persist($entity);
+                for($i=1; $i<=$entity->getChildren(); $i++){
                     $child = new Child();
                     $child->setValue(rand($entity->getMin(), $entity->getMax()));
                     $child->setParent($entity);
                     $em->persist($child);
                     $em->flush();
                 }
-                $em->persist($entity);
                 $em->flush();
     
-                return $this->redirect($this->generateUrl('factory_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('factory'));
             }
         }
 
