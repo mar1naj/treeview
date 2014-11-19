@@ -42,6 +42,28 @@ class FactoryController extends Controller
             'children' => $children
         );
     }
+    
+    
+     /**   
+     * Creates a balnk Factory entity.
+     *
+     * @Route("/initiate/{name}", name="factory_initiate")
+     * @Method("GET")
+     */
+    public function initiateAction(Request $request, $name)
+    {
+        $entity = new Factory();
+        $entity->setName($name);
+        $entity->setChildren(0);
+        $entity->setMin(0);
+        $entity->setMax(1);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($entity);
+        $em->flush();
+        
+        return $this->redirect($this->generateUrl('factory'));
+    }
+    
     /**
      * Creates a new Factory entity.
      *
