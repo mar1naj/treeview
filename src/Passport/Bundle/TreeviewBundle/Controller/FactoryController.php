@@ -91,7 +91,6 @@ class FactoryController extends Controller
                     $child->setValue(rand($entity->getMin(), $entity->getMax()));
                     $child->setParent($entity);
                     $em->persist($child);
-                    $em->flush();
                 }
                 $em->flush();
     
@@ -139,31 +138,6 @@ class FactoryController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Finds and displays a Factory entity.
-     *
-     * @Route("/{id}", name="factory_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('PassportTreeviewBundle:Factory')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Factory entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -240,9 +214,22 @@ class FactoryController extends Controller
                     'Min value should be less than Max value!'
                 );
             }else{
+                $bornchildren = $em->getRepository('PassportTreeviewBundle:Child')->findByParent($entity->getId());
+
+                foreach($bornchildren as $bc){
+                    $em->remove($bc);
+                }
+                
+                for($i=1; $i<=$entity->getChildren(); $i++){
+                    
+                    $child = new Child();
+                    $child->setValue(rand($entity->getMin(), $entity->getMax()));
+                    $child->setParent($entity);
+                    $em->persist($child);
+                }
             $em->flush();
 
-            return $this->redirect($this->generateUrl('factory_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('factory'));
             }
         }
 
@@ -270,7 +257,6 @@ class FactoryController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Factory entity.');
             }
-
             $em->remove($entity);
             $em->flush();
         }
