@@ -4,28 +4,20 @@
     <ul>
         <li>
             <a href="{{ path('factory_new') }}">
-                
+                Root Node
             </a>
         </li>
     </ul>
 
 
         {% for entity in entities %}
-                <a href="{{ path('factory_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
-                {{ entity.children }}
-                {{ entity.min }}
-                {{ entity.max }}
-                {{ entity.id }}
-                <ul>
-                    <li>
-                        <a href="{{ path('factory_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-
+                {{ entity.name }} {{ entity.children }}: ({{ entity.min }} - {{ entity.max }}) --  <a href="{{ path('factory_edit', { 'id': entity.id }) }}">edit</a>
+<br>
                 {% for child in children[entity.id] %}
                     | {{ child.value }}
                 {% endfor %}
+                <br><br>
+                -------------------------------------------------
+                <br><br>
         {% endfor %}
-
-
     {% endblock %}
