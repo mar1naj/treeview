@@ -20,4 +20,23 @@
                 -------------------------------------------------
                 <br><br>
         {% endfor %}
+        
+        Tree here:<br>
+        
+                    <script class="code" type="text/javascript">
+
+                $(function() {
+
+                    // init the tree
+                    $('#tree').aciTree({
+                        ajax: {
+                            url: 'sample.json'
+                        },
+                        selectable: true
+                    });
+
+                });
+
+            </script>
+
     {% endblock %}

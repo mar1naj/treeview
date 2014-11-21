@@ -3,8 +3,20 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            {% stylesheets '../css/*' filter='cssrewrite' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+                <meta name="description" content="A demo to show you how aciTree API can be used">
+        <meta name="keywords" content="aciTree, treeview, control, tree view, javascript, jQuery">
+            
+            {% block javascripts %}
+        <script type="text/javascript" src="../../js/jquery.min.js"></script>
+        <script type="text/javascript" src="../../js/jquery.aciPlugin.min.js"></script>
+        <script type="text/javascript" src="../../js/jquery.aciTree.min.js"></script>
+        {% endblock %}
     </head>
     <body>
         {% for flashMessage in app.session.flashbag.get('notice') %}
@@ -13,6 +25,5 @@
     </div>
 {% endfor %}
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
     </body>
 </html>
