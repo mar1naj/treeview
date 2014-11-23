@@ -44,6 +44,41 @@ class FactoryController extends Controller
     }
     
     
+        /**
+     * Lists all Factory entities and returns a JSON file
+     *
+     * @Route("/json", name="factory_json")
+     * @Method("GET")
+     * @Template()
+     */
+    public function jsonAction()
+    {
+        $rootJson = '[{"id":1,"label":"Root","inode":true,"open":false,"branch":"","my-hash":"","my-url":""}]';
+        $root = json_decode($rootJson, true);
+        
+        //echo $root[0]['label'];
+        // store factories in $root[0]['branch'] as arrays
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('PassportTreeviewBundle:Factory')->findAll();
+        $children = "";
+        foreach($entities as $entity){
+            if($entity->getChildren() > 0 ){
+                $inode = true;
+                $children[$entity->getId()] = $em->getRepository('PassportTreeviewBundle:Child')->findByParent($entity);
+            }else{
+                $inode = false;
+            }
+            $root[0]['branch'][] = array('id' => $entity->getId(), 'label' => $entity->getName(), 'inode' => $inode, 'open' => false, 'branch' => '', 'my-hash'=>'', 'my-url'=>'');
+        }
+
+        return array(
+            'entities' => $entities,
+            'children' => $children
+        );
+    }
+    
      /**   
      * Creates a balnk Factory entity.
      *
@@ -280,4 +315,6 @@ class FactoryController extends Controller
             ->getForm()
         ;
     }
+    
+    
 }

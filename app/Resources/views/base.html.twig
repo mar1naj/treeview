@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-            {% stylesheets '../css/*' filter='cssrewrite' %}
+            {% stylesheets 'bundles/passporttreeview/css/aciTree.css' filter='cssrewrite' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
         {% endblock %}
@@ -13,9 +13,12 @@
         <meta name="keywords" content="aciTree, treeview, control, tree view, javascript, jQuery">
             
             {% block javascripts %}
-        <script type="text/javascript" src="../../js/jquery.min.js"></script>
-        <script type="text/javascript" src="../../js/jquery.aciPlugin.min.js"></script>
-        <script type="text/javascript" src="../../js/jquery.aciTree.min.js"></script>
+                {% javascripts '@PassportTreeviewBundle/Resources/public/js/jquery.min.js'
+                                '@PassportTreeviewBundle/Resources/public/js/jquery.aciPlugin.min.js'
+                                '@PassportTreeviewBundle/Resources/public/js/jquery.aciTree.min.js'
+                %}
+                    <script type="text/javascript" src="{{ asset_url }}"></script>
+                {% endjavascripts %}
         {% endblock %}
     </head>
     <body>

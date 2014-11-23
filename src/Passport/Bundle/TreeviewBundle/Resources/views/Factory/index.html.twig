@@ -22,7 +22,10 @@
         {% endfor %}
         
         Tree here:<br>
-        
+        <div>
+            <div id="tree" class="aciTree"><div>
+                    
+                    </div>
                     <script class="code" type="text/javascript">
 
                 $(function() {
@@ -30,7 +33,7 @@
                     // init the tree
                     $('#tree').aciTree({
                         ajax: {
-                            url: 'sample.json'
+                            url: '../../sample.json'
                         },
                         selectable: true
                     });
