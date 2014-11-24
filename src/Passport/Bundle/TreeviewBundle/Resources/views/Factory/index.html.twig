@@ -1,6 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+    <!--
     <ul>
         <li>
             <a href="{{ path('factory_new') }}">
@@ -20,8 +21,8 @@
                 -------------------------------------------------
                 <br><br>
         {% endfor %}
+        -->
         
-        Tree here:<br>
         <div>
             <div id="tree" class="aciTree"><div>
                     
@@ -33,7 +34,7 @@
                     // init the tree
                     $('#tree').aciTree({
                         ajax: {
-                            url: '../../sample.json'
+                            url: '{{path("factory_json")}}'
                         },
                         selectable: true
                     });

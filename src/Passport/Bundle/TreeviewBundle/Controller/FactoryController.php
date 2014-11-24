@@ -3,6 +3,7 @@
 namespace Passport\Bundle\TreeviewBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -62,21 +63,25 @@ class FactoryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('PassportTreeviewBundle:Factory')->findAll();
-        $children = "";
-        foreach($entities as $entity){
-            if($entity->getChildren() > 0 ){
-                $inode = true;
-                $children[$entity->getId()] = $em->getRepository('PassportTreeviewBundle:Child')->findByParent($entity);
-            }else{
-                $inode = false;
-            }
-            $root[0]['branch'][] = array('id' => $entity->getId(), 'label' => $entity->getName(), 'inode' => $inode, 'open' => false, 'branch' => '', 'my-hash'=>'', 'my-url'=>'');
-        }
 
-        return array(
-            'entities' => $entities,
-            'children' => $children
-        );
+        foreach($entities as $entity){
+            $label = "<div oncontextmenu='javascript:rightclick(this);return false;'>".$entity->getName().": ".$entity->getChildren()." (".$entity->getMin()." - ".$entity->getMax().")</div>";
+            if($entity->getChildren() > 0 ){
+                $childrenObj = $em->getRepository('PassportTreeviewBundle:Child')->findByParent($entity);
+                $children = array();
+                foreach($childrenObj as $child){
+                    $children[]=array('id' => $child->getId(), 'label' => $child->getValue(), 'inode' => false, 'open' => false, 'branch' => '', 'my-hash'=>'', 'my-url'=>'');
+                }
+                $root[0]['branch'][] = array('id' => $entity->getId(), 'label' => $label, 'inode' => true, 'open' => false, 'branch' => $children, 'my-hash'=>'', 'my-url'=>'');
+            }else{
+                $root[0]['branch'][] = array('id' => $entity->getId(), 'label' => $label, 'inode' => false, 'open' => false, 'branch' => '', 'my-hash'=>'', 'my-url'=>'');
+            }
+        }
+        
+        $json=json_encode($root);
+        $response = new Response($json);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
     
      /**   
