@@ -4,7 +4,9 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-            {% stylesheets 'bundles/passporttreeview/css/aciTree.css' filter='cssrewrite' %}
+            {% stylesheets 'bundles/passporttreeview/css/aciTree.css'
+                            'bundles/passporttreeview/css/main.css'
+            filter='cssrewrite' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
         {% endblock %}
@@ -28,6 +30,8 @@
         {{ flashMessage }}
     </div>
 {% endfor %}
-        {% block body %}{% endblock %}
+        {% block body %}
+        <div class="contextmenu"><ul><li><a href="#">Generate</a></li><li><a href="#">Delete</a></li></ul></div>    
+        {% endblock %}
     </body>
 </html>
