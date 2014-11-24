@@ -23,25 +23,18 @@
                 <br><br>
         {% endfor %}
         -->
-        
         <div>
-            <div id="tree" class="aciTree"><div>
-                    
-                    </div>
-                    <script class="code" type="text/javascript">
-
-                $(function() {
-
-                    // init the tree
-                    $('#tree').aciTree({
-                        ajax: {
-                            url: '{{path("factory_json")}}'
-                        },
-                        selectable: true
-                    });
-
-                });
-
-            </script>
-
+            <div id="tree" class="aciTree"><div>                    
+        </div>
+        <script class="code" type="text/javascript">
+           $(function() {
+               // init the tree
+               $('#tree').aciTree({
+                   ajax: {
+                       url: '{{path("factory_json")}}'
+                   },
+                   selectable: true
+               });
+           });
+       </script>
     {% endblock %}

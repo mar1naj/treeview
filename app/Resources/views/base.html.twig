@@ -5,7 +5,8 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             {% stylesheets 'bundles/passporttreeview/css/aciTree.css'
-                            'bundles/passporttreeview/css/main.css'
+                           'bundles/passporttreeview/css/main.css'
+			   'bundles/passporttreeview/css/jquery.contextmenu.css'
             filter='cssrewrite' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
@@ -18,11 +19,12 @@
                 {% javascripts '@PassportTreeviewBundle/Resources/public/js/jquery.min.js'
                                 '@PassportTreeviewBundle/Resources/public/js/jquery.aciPlugin.min.js'
                                 '@PassportTreeviewBundle/Resources/public/js/jquery.aciTree.min.js'
+				'@PassportTreeviewBundle/Resources/public/js/jquery.contextmenu.js'
                                 '@PassportTreeviewBundle/Resources/public/js/main.js'
                 %}
                     <script type="text/javascript" src="{{ asset_url }}"></script>
                 {% endjavascripts %}
-        {% endblock %}
+	    {% endblock %}
     </head>
     <body>
         {% for flashMessage in app.session.flashbag.get('notice') %}
@@ -30,8 +32,28 @@
         {{ flashMessage }}
     </div>
 {% endfor %}
-        {% block body %}
-        <div class="contextmenu"><ul><li><a href="#">Generate</a></li><li><a href="#">Delete</a></li></ul></div>    
+        {% block body %}{% endblock %}
+	{% block bottom %}
+	    <script>
+		$(document).ready(function(){
+		    $('.rclickable').on('contextmenu', function(){alert('helloooooooooooooo');});
+		    $('.rclickable').contextPopup({
+  title: 'My Popup Menu',
+  items: [
+	{label:'Some Item',     icon:'icons/shopping-basket.png',             action:function() { alert('clicked 1') } },
+	{label:'Another Thing', icon:'icons/receipt-text.png',                action:function() { alert('clicked 2') } },
+	{label:'Blah Blah',     icon:'icons/book-open-list.png',              action:function() { alert('clicked 3') } },
+	null, // divider
+	{label:'Sheep',         icon:'icons/application-monitor.png',         action:function() { alert('clicked 4') } },
+	{label:'Cheese',        icon:'icons/bin-metal.png',                   action:function() { alert('clicked 5') } },
+	{label:'Bacon',         icon:'icons/magnifier-zoom-actual-equal.png', action:function() { alert('clicked 6') } },
+	null, // divider
+	{label:'Onwards',       icon:'icons/application-table.png',           action:function() { alert('clicked 7') } },
+	{label:'Flutters',      icon:'icons/cassette.png',                    action:function() { alert('clicked 8') } }
+  ]
+});
+		    });
+</script>
         {% endblock %}
     </body>
 </html>

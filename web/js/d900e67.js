@@ -61,6 +61,122 @@ aciPluginClass.plugins.aciTree_dom={container:function(b){var a=b.lastChild;if(a
 // sortable (require utils extension & aciSortable plugin)
 (function(d,c,e){var a={sortable:false,sortDelay:750,sortDrag:function(h,j,i,g){if(!i){var f=this.getLabel(h);if(this._private.dragDrop&&(this._private.dragDrop.length>1)){f+=" and #"+(this._private.dragDrop.length-1)+" more"}g.html(f)}},sortValid:function(j,h,k,g,l,i){var f=this.getLabel(j);if(this._private.dragDrop.length>1){f+=" and #"+(this._private.dragDrop.length-1)+" more"}if(g){i.html("move "+f+" to "+this.getLabel(this.itemFrom(h)));l.removeClass("aciTreeAfter aciTreeBefore")}else{if(k!==null){if(k){i.html("move "+f+" before "+this.getLabel(h));l.removeClass("aciTreeAfter").addClass("aciTreeBefore")}else{i.html("move "+f+" after "+this.getLabel(h));l.removeClass("aciTreeBefore").addClass("aciTreeAfter")}}}}};var b={__extend:function(){d.extend(this._private,{openTimeout:null,dragDrop:null});this._super()},_sortableInit:function(){this._instance.jQuery.aciSortable({container:".aciTreeUl",item:".aciTreeLi",child:50,childHolder:'<ul class="aciTreeUl aciTreeChild"></ul>',childHolderSelector:".aciTreeChild",placeholder:'<li class="aciTreeLi aciTreePlaceholder"><div></div></li>',placeholderSelector:".aciTreePlaceholder",helper:'<div class="aciTreeHelper"></div>',helperSelector:".aciTreeHelper",before:this.proxy(function(f){if(!this._initDrag(f)){return false}if(!this._trigger(f,"beforedrag")){this._trigger(f,"dragfail");return false}return true}),start:this.proxy(function(g,h,f){this._instance.jQuery.addClass("aciTreeDragDrop");f.css({opacity:1}).html(this.getLabel(g))}),drag:this.proxy(function(g,i,h,f){if(!h){c.clearTimeout(this._private.openTimeout)}if(this._instance.options.sortDrag){this._instance.options.sortDrag.apply(this,arguments)}}),valid:this.proxy(function(j,h,k,g,l,i){c.clearTimeout(this._private.openTimeout);if(!this._checkDrop(j,h,k,g,l,i)){return false}var f=this._options({hover:h,before:k,isContainer:g,placeholder:l,helper:i});if(!this._trigger(j,"checkdrop",f)){return false}if(this.isInode(h)&&!this.isOpen(h)){this._private.openTimeout=c.setTimeout(this.proxy(function(){this.open(h)}),this._instance.options.sortDelay)}if(this._instance.options.sortValid){this._instance.options.sortValid.apply(this,arguments)}return true}),create:this.proxy(function(g,h,f){if(this.isLeaf(f)){f.append(g._instance.options.childHolder);return true}return false},true),end:this.proxy(function(q,k,p,g){c.clearTimeout(this._private.openTimeout);var r={placeholder:p,helper:g};r=this._options(r,"sorted","dropfail",null,q);if(p.parent().length){var i=this.prev(p,true);if(i.length){p.detach();var l=d(this._private.dragDrop.get().reverse());this._private.dragDrop=null;l.each(this.proxy(function(s){this.moveAfter(d(s),this._inner(r,{success:r.success,fail:r.fail,after:i}))},true))}else{var j=this.next(p,true);if(j.length){p.detach();var l=d(this._private.dragDrop.get().reverse());this._private.dragDrop=null;l.each(this.proxy(function(s){this.moveBefore(d(s),this._inner(r,{success:r.success,fail:r.fail,before:j}))},true))}else{var o=this.parent(p);var f=p.parent();p.detach();f.remove();if(this.isLeaf(o)){var l=this._private.dragDrop;this.asChild(l.eq(0),this._inner(r,{success:function(){this._success(q,r);this.open(o);l.filter(":gt(0)").each(this.proxy(function(s){this.moveAfter(d(s),this._inner(r,{success:r.success,fail:r.fail,after:this.last(o)}))},true))},fail:r.fail,parent:o}))}else{this._fail(q,r)}}}}else{this._fail(q,r)}this._private.dragDrop=null;if(g.parent().length){var n=d(c).scrollTop();var h=d(c).scrollLeft();var m=q[0].getBoundingClientRect();g.animate({top:m.top+n,left:m.left+h,opacity:0},{complete:function(){g.detach()}})}this._instance.jQuery.removeClass("aciTreeDragDrop")})})},_initHook:function(){if(this.extSortable()){this._sortableInit()}this._super()},_parents:function(l){var h=l.length,k,g,f=[];for(var n=0;n<h-1;n++){k=l.eq(n);for(var m=n+1;m<h;m++){g=l.eq(m);if(this.isChildren(k,g)){f.push(l[m])}else{if(this.isChildren(g,k)){f.push(l[n])}}}}return l.not(f)},_initDrag:function(g){if(this.extSelectable&&this.extSelectable()){if(!this.hasFocus()){this._instance.jQuery.focus()}if(!this.isEnabled(g)){return false}var f=this.selected();if(f.length){if(!this.isSelected(g)){return false}}else{f=g}this._private.dragDrop=this._parents(f)}else{this._instance.jQuery.focus();this._private.dragDrop=g}return true},_checkDrop:function(j,h,k,g,l,i){var f=this._private.dragDrop;if(!f){return false}var m=this.itemFrom(h);if(f.is(m)||f.has(m[0]).length){return false}if(!g){m=k?this.prev(h):this.next(h);if(f.is(m)){return false}}return true},extSortable:function(){return this._instance.options.sortable},option:function(f,g){if(this.wasInit()&&!this.isLocked()){if((f=="sortable")&&(g!=this.extSortable())){if(g){this._sortableInit()}else{this._sortableDone()}}}this._super(f,g)},_sortableDone:function(){this._instance.jQuery.unbind(this._private.nameSpace);this._instance.jQuery.aciSortable("destroy")},_destroyHook:function(f){if(f){this._sortableDone()}this._super(f)}};aciPluginClass.plugins.aciTree=aciPluginClass.plugins.aciTree.extend(b,"aciTreeSortable");aciPluginClass.defaults("aciTree",a)})(jQuery,this);
 
+/**
+ * jQuery plugin for Pretty looking right click context menu.
+ *
+ * Requires popup.js and popup.css to be included in your page. And jQuery, obviously.
+ *
+ * Usage:
+ *
+ *   $('.something').contextPopup({
+ *     title: 'Some title',
+ *     items: [
+ *       {label:'My Item', icon:'/some/icon1.png', action:function() { alert('hi'); }},
+ *       {label:'Item #2', icon:'/some/icon2.png', action:function() { alert('yo'); }},
+ *       null, // divider
+ *       {label:'Blahhhh', icon:'/some/icon3.png', action:function() { alert('bye'); }, isEnabled: function() { return false; }},
+ *     ]
+ *   });
+ *
+ * Icon needs to be 16x16. I recommend the Fugue icon set from: http://p.yusukekamiyamane.com/ 
+ *
+ * - Joe Walnes, 2011 http://joewalnes.com/
+ *   https://github.com/joewalnes/jquery-simple-context-menu
+ *
+ * MIT License: https://github.com/joewalnes/jquery-simple-context-menu/blob/master/LICENSE.txt
+ */
+jQuery.fn.contextPopup = function(menuData) {
+	// Define default settings
+	var settings = {
+		contextMenuClass: 'contextMenuPlugin',
+		gutterLineClass: 'gutterLine',
+		headerClass: 'header',
+		seperatorClass: 'divider',
+		title: '',
+		items: []
+	};
+	
+	// merge them
+	$.extend(settings, menuData);
+
+  // Build popup menu HTML
+  function createMenu(e) {
+    var menu = $('<ul class="' + settings.contextMenuClass + '"><div class="' + settings.gutterLineClass + '"></div></ul>')
+      .appendTo(document.body);
+    if (settings.title) {
+      $('<li class="' + settings.headerClass + '"></li>').text(settings.title).appendTo(menu);
+    }
+    settings.items.forEach(function(item) {
+      if (item) {
+        var rowCode = '<li><a href="#"><span></span></a></li>';
+        // if(item.icon)
+        //   rowCode += '<img>';
+        // rowCode +=  '<span></span></a></li>';
+        var row = $(rowCode).appendTo(menu);
+        if(item.icon){
+          var icon = $('<img>');
+          icon.attr('src', item.icon);
+          icon.insertBefore(row.find('span'));
+        }
+        row.find('span').text(item.label);
+          
+        if (item.isEnabled != undefined && !item.isEnabled()) {
+            row.addClass('disabled');
+        } else if (item.action) {
+            row.find('a').click(function () { item.action(e); });
+        }
+
+      } else {
+        $('<li class="' + settings.seperatorClass + '"></li>').appendTo(menu);
+      }
+    });
+    menu.find('.' + settings.headerClass ).text(settings.title);
+    return menu;
+  }
+
+  // On contextmenu event (right click)
+  this.bind('contextmenu', function(e) {	
+    var menu = createMenu(e)
+      .show();
+    
+    var left = e.pageX + 5, /* nudge to the right, so the pointer is covering the title */
+        top = e.pageY;
+    if (top + menu.height() >= $(window).height()) {
+        top -= menu.height();
+    }
+    if (left + menu.width() >= $(window).width()) {
+        left -= menu.width();
+    }
+
+    // Create and show menu
+    menu.css({zIndex:1000001, left:left, top:top})
+      .bind('contextmenu', function() { return false; });
+
+    // Cover rest of page with invisible div that when clicked will cancel the popup.
+    var bg = $('<div></div>')
+      .css({left:0, top:0, width:'100%', height:'100%', position:'absolute', zIndex:1000000})
+      .appendTo(document.body)
+      .bind('contextmenu click', function() {
+        // If click or right click anywhere else on page: remove clean up.
+        bg.remove();
+        menu.remove();
+        return false;
+      });
+
+    // When clicking on a link in menu: clean up (in addition to handlers on link already)
+    menu.find('a').click(function() {
+      bg.remove();
+      menu.remove();
+    });
+
+    // Cancel event, so real browser popup doesn't appear.
+    return false;
+  });
+
+  return this;
+};
+
+
 $('.rclickable').contextPopup({
   title: 'My Popup Menu',
   items: [
