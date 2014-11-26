@@ -23,7 +23,6 @@
                 <br><br>
         {% endfor %}
         -->
-        
         <div>
             <div id="tree" class="aciTree"><div>
                     
@@ -43,5 +42,19 @@
                 });
 
             </script>
+<script>
+$(document).on("contextmenu", ".rclickable", function(e){
+   $(".contextmenu").css( {display:"block", position:"absolute", top:event.pageY, left: event.pageX+20});
+   $('#modal').addClass('modal');
+   var editurl = "{{path('factory_edit', {"id":"idvariable"}|raw)}}";
+   editurl = editurl.replace('idvariable', '\'+$(this).attr("id")+\'');
+   $('#modal').load(editurl);
+   return false;
+});
 
+$(document).click(function(e){
+   $(".contextmenu").css('display','none');
+});
+
+</script>
     {% endblock %}

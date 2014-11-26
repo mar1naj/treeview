@@ -65,7 +65,7 @@ class FactoryController extends Controller
         $entities = $em->getRepository('PassportTreeviewBundle:Factory')->findAll();
 
         foreach($entities as $entity){
-            $label = "<div class='rclickable'>".$entity->getName().": ".$entity->getChildren()." (".$entity->getMin()." - ".$entity->getMax().")</div>";
+            $label = "<div class='rclickable' id='".$entity->getId()."'>".$entity->getName().": ".$entity->getChildren()." (".$entity->getMin()." - ".$entity->getMax().")</div>";
             if($entity->getChildren() > 0 ){
                 $childrenObj = $em->getRepository('PassportTreeviewBundle:Child')->findByParent($entity);
                 $children = array();

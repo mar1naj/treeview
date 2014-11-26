@@ -8,6 +8,7 @@
                             'bundles/passporttreeview/css/main.css'
             filter='cssrewrite' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
             {% endstylesheets %}
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -21,6 +22,7 @@
                                 '@PassportTreeviewBundle/Resources/public/js/main.js'
                 %}
                     <script type="text/javascript" src="{{ asset_url }}"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
                 {% endjavascripts %}
         {% endblock %}
     </head>
@@ -31,7 +33,15 @@
     </div>
 {% endfor %}
         {% block body %}
-        <div class="contextmenu"><ul><li><a href="#">Generate</a></li><li><a href="#">Delete</a></li></ul></div>    
+        <div class="contextmenu">
+            <ul>
+                <li>Generate</li>
+                <li>Delete</li>
+            </ul>
+        </div>
+        
+        <!-- Modal -->
+        <div id="modal" style='display: none;'></div>
         {% endblock %}
     </body>
 </html>
