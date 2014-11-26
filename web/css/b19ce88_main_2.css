@@ -6,9 +6,7 @@ div.cmenu{
     text-align: left;
 }
 div.cmenu ul{
-    padding: 0px;
-    
-    
+    padding: 0px; 
 }
 
 div.cmenu li{
@@ -42,11 +40,17 @@ div.cmenu li:hover{
 
 #modal{
 	position:relative;
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: auto;
+	padding:50px;
     border: dashed 2px #c0c0c0;
     display: block;
 	background-color:#fff;
 	margin:auto;
 	display:none;
+}
+
+.record_actions li{
+	display:inline;
+	padding:5px;
 }

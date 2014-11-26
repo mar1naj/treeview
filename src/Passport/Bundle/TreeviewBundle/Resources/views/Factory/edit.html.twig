@@ -1,15 +1,14 @@
     <h1>Regenerate Numbers</h1>
 
-    {{ form(edit_form) }}
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('factory') }}">
-            Cancel
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
-<script>
     
-</script>
+    {{ form_errors(edit_form) }}
+    {{ form_row(edit_form.name)}}
+    {{ form_row(edit_form.children)}}
+    {{ form_row(edit_form.min)}}
+    {{ form_row(edit_form.max)}}
+    
+<ul class="record_actions">
+    <li>{{ form_row(edit_form.submit)}}</li>
+    <li>{{ form(delete_form) }}</li>
+    <li>{{ form_row(edit_form.button)}}</li>
+</ul>

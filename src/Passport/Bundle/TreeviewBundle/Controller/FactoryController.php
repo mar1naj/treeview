@@ -224,6 +224,7 @@ class FactoryController extends Controller
         ));
 
         $form->add('submit', 'submit', array('label' => 'Generate'));
+        $form->add('button', 'button', array('label' => 'Cancel'));
 
         return $form;
     }
