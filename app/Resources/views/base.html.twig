@@ -33,15 +33,37 @@
     </div>
 {% endfor %}
         {% block body %}
-        <div class="contextmenu">
+        <div class="cmenu">
             <ul>
-                <li>Generate</li>
-                <li>Delete</li>
+                <li class='generate'>Generate</li>
+                <li class='delete'>Delete</li>
             </ul>
         </div>
         
         <!-- Modal -->
-        <div id="modal" style='display: none;'></div>
+	<div id="modalcontainer">
+	    <div id="modalscreen"></div>
+            <div id="modal">Please wait...</div>
+	</div>
+	<script>
+	    $(document).ready(function(e){
+		    $('div.cmenu li').click(function(){
+		      //alert('this button is ' + $(this).html() + ' and the id is: ' + $(this).attr('id'));		      
+		      $('#modalcontainer').css('display', 'block');
+		      $('#modal').slideDown("slow");
+		      var modalurl = "{{path("factory_edit", {'id':'facid'})}}";
+		      modalurl = modalurl.replace('facid', $(this).attr('id'));
+		      $('#modal').load(modalurl);
+		      $('#modalscreen').click(function(){
+			$('#modal').slideUp("slow", function(){
+			    	$('#modal').html('Please Wait...');
+				$('#modalcontainer').fadeOut();
+			    });
+
+			});
+		    });
+	    });
+        </script>
         {% endblock %}
     </body>
 </html>

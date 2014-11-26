@@ -220,9 +220,10 @@ class FactoryController extends Controller
         $form = $this->createForm(new FactoryType(), $entity, array(
             'action' => $this->generateUrl('factory_update', array('id' => $entity->getId())),
             'method' => 'PUT',
+            'attr' => array('class'=>"form-horizontal"),
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Generate'));
 
         return $form;
     }
