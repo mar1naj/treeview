@@ -323,4 +323,25 @@ class FactoryController extends Controller
     }
     
     
+    /**
+     * Deletes a Factory entity.
+     *
+     * @Route("/{id}/delete", name="factory_delete1")
+     * @Method("GET")
+     */
+    public function delete1Action(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('PassportTreeviewBundle:Factory')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Factory entity.');
+        }
+        $em->remove($entity);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('factory'));
+    }
+    
+    
 }

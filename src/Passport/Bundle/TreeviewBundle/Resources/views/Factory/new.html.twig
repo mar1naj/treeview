@@ -5,9 +5,6 @@
 
     {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('factory') }}">Cancel</a>
-    </li>
-</ul>
+    <a href="#" class='btn' onclick="hideModal();">Cancel</a>
+
 {% endblock %}
