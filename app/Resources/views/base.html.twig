@@ -64,7 +64,7 @@
 			modalurl = "{{path("factory_initiate", {'name':'nameph'})}}";
 			var nameph = prompt("Enter a name: ");
 			if (nameph==null) {
-alert('null');
+			    modalurl="";
 			}
 			modalurl = modalurl.replace('nameph', nameph);
 			keepmodal = false;
