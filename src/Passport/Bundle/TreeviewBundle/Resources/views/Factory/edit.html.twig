@@ -1,14 +1,15 @@
     <h1>Regenerate Numbers</h1>
 
+    {{ form_start(edit_form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_errors(edit_form) }}
+        {{ form_row(edit_form.name)}}
+        {{ form_row(edit_form.children)}}
+        {{ form_row(edit_form.min)}}
+        {{ form_row(edit_form.max)}}
     
-    {{ form_errors(edit_form) }}
-    {{ form_row(edit_form.name)}}
-    {{ form_row(edit_form.children)}}
-    {{ form_row(edit_form.min)}}
-    {{ form_row(edit_form.max)}}
-    
-<ul class="record_actions">
-    <li>{{ form_row(edit_form.submit)}}</li>
-    <li>{{ form(delete_form) }}</li>
-    <li>{{ form_row(edit_form.button)}}</li>
-</ul>
+        <ul class="record_actions">
+            <li>{{ form_row(edit_form.submit)}}</li>
+            <li><a href="#" class='btn' onclick="hideModal();">Cancel</a></li>
+        </ul>
+    {{ form_rest(edit_form)}}
+    {{ form_end(edit_form) }}

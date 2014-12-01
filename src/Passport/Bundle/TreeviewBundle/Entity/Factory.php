@@ -3,6 +3,8 @@
 namespace Passport\Bundle\TreeviewBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \DateTime;
+
 
 /**
  * Factory
@@ -57,6 +59,12 @@ class Factory
     private $id;
 
 
+     /* Constructor
+     */
+    public function __construct()
+    {
+      	$this->modeified = new DateTime;
+	}
 
     /**
      * Set name

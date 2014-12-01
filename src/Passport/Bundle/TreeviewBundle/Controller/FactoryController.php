@@ -54,7 +54,7 @@ class FactoryController extends Controller
      */
     public function jsonAction()
     {
-        $rootJson = '[{"id":1,"label":"Root","inode":true,"open":false,"branch":"","my-hash":"","my-url":""}]';
+        $rootJson = '[{"id":1,"label":"<div id=\'root\'>Root</div>","inode":true,"open":true,"branch":"","my-hash":"","my-url":""}]';
         $root = json_decode($rootJson, true);
         
         //echo $root[0]['label'];
@@ -97,6 +97,7 @@ class FactoryController extends Controller
         $entity->setChildren(0);
         $entity->setMin(0);
         $entity->setMax(1);
+        $entity->setModified(new \DateTime());
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();
@@ -224,7 +225,6 @@ class FactoryController extends Controller
         ));
 
         $form->add('submit', 'submit', array('label' => 'Generate'));
-        $form->add('button', 'button', array('label' => 'Cancel'));
 
         return $form;
     }
@@ -236,9 +236,8 @@ class FactoryController extends Controller
      * @Template("PassportTreeviewBundle:Factory:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
-    {
+    {        
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('PassportTreeviewBundle:Factory')->find($id);
 
         if (!$entity) {

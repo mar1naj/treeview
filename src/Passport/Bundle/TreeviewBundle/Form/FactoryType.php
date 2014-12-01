@@ -19,7 +19,7 @@ class FactoryType extends AbstractType
             ->add('children')
             ->add('min')
             ->add('max')
-            ->add('modified')
+            //->add('modified')
         ;
     }
     
