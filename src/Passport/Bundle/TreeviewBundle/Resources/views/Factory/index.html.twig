@@ -2,44 +2,18 @@
 
 {% block body -%}
     {{ parent() }}
-    <!--
-    <ul>
-        <li>
-            <a href="{{ path('factory_new') }}">
-                Root Node
-            </a>
-        </li>
-    </ul>
-
-
-        {% for entity in entities %}
-                {{ entity.name }} {{ entity.children }}: ({{ entity.min }} - {{ entity.max }}) --  <a href="{{ path('factory_edit', { 'id': entity.id }) }}">edit</a>
-<br>
-                {% for child in children[entity.id] %}
-                    | {{ child.value }}
-                {% endfor %}
-                <br><br>
-                -------------------------------------------------
-                <br><br>
-        {% endfor %}
-        -->
         <div>
             <div id="tree" class="aciTree"><div>
-                    
-                    </div>
-                    <script class="code" type="text/javascript">
-
-                $(function() {
-
-                    // init the tree
-                    $('#tree').aciTree({
-                        ajax: {
-                            url: '{{path("factory_json")}}'
-                        },
-                        selectable: true
-                    });
-
+        </div>
+        <script class="code" type="text/javascript">
+            $(function() {
+                // init the tree
+                $('#tree').aciTree({
+                    ajax: {
+                        url: '{{path("factory_json")}}'
+                    },
+                    selectable: true
                 });
-
-            </script>
-    {% endblock %}
+            });
+        </script>
+{% endblock %}
