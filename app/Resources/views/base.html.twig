@@ -47,14 +47,27 @@
         <!-- Modal -->
 	<div id="modalcontainer">
 	    <div id="modalscreen"></div>
-            <div id="modal">Please wait...</div>
+            <div id="modal">
+	    {% if invalid is defined and invalid == true%}
+		{% if edit_form is defined %}
+		    {% include '@templates_dir/edit.html.twig' %}
+		{% elseif form is defined  %}
+		    {% include '@templates_dir/new.html.twig' %}
+		{% endif %}
+	    {% else %}
+		Please wait...
+	    {% endif %}
+	    </div>
 	</div>
 	<script>
 	    $(document).ready(function(e){
+		{% if invalid is defined and invalid == true %}
+		    $('#modalcontainer').css('display', 'block');
+		    $('#modal').slideDown("slow");
+		{% endif %}
 		$('div.cmenu li').click(function(){
 		    var modalurl;
 		    var keepmodal;
-		    //alert('this button is ' + $(this).html() + ' and the id is: ' + $(this).attr('id'));		      
 		    $('#modalcontainer').css('display', 'block');
 		    $('#modal').slideDown("slow");
 		    if ($(this).hasClass('create')) {
@@ -79,12 +92,6 @@
 		    modalurl = modalurl.replace('facid', $(this).attr('id'));
 		    //Loading the new/edit form into the modal div
 		    $('#modal').load(modalurl);
-		    $('#modalscreen').click(function(){
-			$('#modal').slideUp("slow", function(){
-			    $('#modal').html('Please Wait...');
-			    $('#modalcontainer').fadeOut();
-			});
-		    });
 		    
 		    if (keepmodal==false) {
 			hideModal();
@@ -98,6 +105,18 @@
 		    });
 
 		});
+		//hide modal when clicking on gray area
+		$('#modalscreen').click(function(){
+		    hideModal();
+		});
+		
+		 function hideModal(){
+			$('#modal').slideUp("slow", function(){
+			       $('#modal').html('Please Wait...');
+			       $('#modalcontainer').fadeOut(); 
+			       
+		       });
+	       } 
 	    });
         </script>
         {% endblock %}

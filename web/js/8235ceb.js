@@ -92,9 +92,6 @@ $(document).ready(function(e) {
 		
 });
 
- function hideModal(){
-        $('#modalscreen').click();
-    } 
 	
 function quit(){
 	return this.exit();

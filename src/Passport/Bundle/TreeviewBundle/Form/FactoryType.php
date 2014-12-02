@@ -16,9 +16,9 @@ class FactoryType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('children', null, array('data'=>1))
-            ->add('min', null, array('data'=>0))
-            ->add('max', null, array('data'=>100))
+            ->add('children')
+            ->add('min')
+            ->add('max')
             //->add('modified')
         ;
     }

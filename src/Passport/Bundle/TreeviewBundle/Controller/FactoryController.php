@@ -110,7 +110,7 @@ class FactoryController extends Controller
      *
      * @Route("/", name="factory_create")
      * @Method("POST")
-     * @Template("PassportTreeviewBundle:Factory:new.html.twig")
+     * @Template("PassportTreeviewBundle:Factory:index.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -142,6 +142,7 @@ class FactoryController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'invalid' => true,
         );
     }
 
@@ -200,12 +201,10 @@ class FactoryController extends Controller
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -233,7 +232,7 @@ class FactoryController extends Controller
      *
      * @Route("/{id}", name="factory_update")
      * @Method("PUT")
-     * @Template("PassportTreeviewBundle:Factory:edit.html.twig")
+     * @Template("PassportTreeviewBundle:Factory:index.html.twig")
      */
     public function updateAction(Request $request, $id)
     {        
@@ -277,7 +276,7 @@ class FactoryController extends Controller
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'invalid'     => true,
         );
     }
     /**
@@ -349,7 +348,7 @@ class FactoryController extends Controller
         $file_content=file_get_contents($file);
         //trim the date from previous edits
         $date = time();
-        $file_content = strstr($file_content, "timestamp@", true)."timestamp@".$date."</div";        
+        $file_content = strstr($file_content, "timestamp@", true)."timestamp@".$date."</div>";        
         return file_put_contents($file, $file_content);
     }
 }

@@ -30,6 +30,8 @@ twig:
     strict_variables: "%kernel.debug%"
     form:
         resources: ['bootstrap_3_layout.html.twig']
+    paths:
+       "%kernel.root_dir%/../src/Passport/Bundle/TreeviewBundle/Resources/views/Factory": templates_dir
 
 
 # Assetic Configuration
