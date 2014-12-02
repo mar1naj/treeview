@@ -101,7 +101,7 @@ class FactoryController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($entity);
         $em->flush();
-        
+        $this->triggerAjax();
         return $this->redirect($this->generateUrl('factory'));
     }
     
@@ -134,7 +134,7 @@ class FactoryController extends Controller
                     $em->persist($child);
                 }
                 $em->flush();
-    
+                $this->triggerAjax();
                 return $this->redirect($this->generateUrl('factory'));
             }
         }
@@ -269,7 +269,7 @@ class FactoryController extends Controller
                     $em->persist($child);
                 }
             $em->flush();
-
+            $this->triggerAjax();
             return $this->redirect($this->generateUrl('factory'));
             }
         }
@@ -301,7 +301,7 @@ class FactoryController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->triggerAjax();
         return $this->redirect($this->generateUrl('factory'));
     }
 
@@ -339,9 +339,17 @@ class FactoryController extends Controller
         }
         $em->remove($entity);
         $em->flush();
-
+        $this->triggerAjax();
         return $this->redirect($this->generateUrl('factory'));
     }
     
-    
+    //append random text to aciTreeCall.html to update date modified, then Ajax would detect that and load the file
+    public function triggerAjax(){
+        $file = "bundles/passporttreeview/aciTree/aciTreeCall.html";
+        $file_content=file_get_contents($file);
+        //trim the date from previous edits
+        $date = time();
+        $file_content = strstr($file_content, "timestamp@", true)."timestamp@".$date."</div";        
+        return file_put_contents($file, $file_content);
+    }
 }

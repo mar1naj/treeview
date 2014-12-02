@@ -55,3 +55,7 @@ div.cmenu li:hover{
 	padding:5px;
 	margin: 5px; 
 }
+
+.dateModified{
+	display:none;
+} 

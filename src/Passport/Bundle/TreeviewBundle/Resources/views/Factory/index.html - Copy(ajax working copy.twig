@@ -14,12 +14,12 @@ function refreshTree(){
 		async: true,
 		cache:false,
 		timeout: 50000,
-                ifModified: true,
+          	ifModified:true,
 		success: function(data){
 			outputTree(data);
 			setTimeout(
 				refreshTree,
-				2000
+				1000
 				);
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -32,7 +32,8 @@ function refreshTree(){
 }
 
 function outputTree(data){
-    $('#treecontainer').html(data);
+    //$('#treecontainer').html(data);
+    $('#treecontainer').append(data);
 }
 
 refreshTree();
